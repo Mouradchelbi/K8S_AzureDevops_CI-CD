@@ -4,3 +4,28 @@ on:
   push:
     branches:
       - main
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Terraform code
+        uses: actions/checkout@v2
+      - name: Install Terraform
+        run: |
+          wget https://releases.hashicorp.com/terraform/1.0.0/terraform_1.0.0_linux_amd64.zip
+          unzip terraform_1.0.0_linux_amd64.zip
+          sudo mv terraform /usr/local/bin/
+      - name: Terraform Init
+        run: terraform init
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+
+  ansible:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Ansible code
+        uses: actions/checkout@v2
+      - name: Install Ansible
+        run: sudo apt-get install -y ansible
+      - name: Run Ansible Playbook
+        run: ansible-playbook -i inventory.yml playbook.yml
