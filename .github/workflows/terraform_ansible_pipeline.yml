@@ -1,0 +1,6 @@
+name: Terraform and Ansible Pipeline
+
+on:
+  push:
+    branches:
+      - main
